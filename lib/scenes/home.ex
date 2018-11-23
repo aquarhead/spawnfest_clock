@@ -6,14 +6,21 @@ defmodule SpawnfestClock.Scene.Home do
   import Scenic.Primitives
   # import Scenic.Components
 
-  @graph Graph.build(font: :roboto, font_size: 50, text_align: :center)
-         |> text("", id: :time, translate: {350, 200})
+  @pic_path :code.priv_dir(:spawnfest_clock) |> Path.join("/static/671794.png")
+  @pic_hash Scenic.Cache.Hash.file!(@pic_path, :sha)
 
-  # ============================================================================
-  # setup
+  @graph Graph.build(font: :roboto_mono, font_size: 40, text_align: :center)
+         |> text("", id: :time, translate: {350, 270})
+         |> rect(
+           {200, 200},
+           id: :pic,
+           fill: {:image, @pic_hash},
+           translate: {250, 20}
+         )
 
-  # --------------------------------------------------------
   def init(_, _) do
+    Scenic.Cache.File.load(@pic_path, @pic_hash)
+
     push_graph(@graph)
 
     {microseconds, _} = Time.utc_now().microsecond
