@@ -71,7 +71,7 @@ defmodule SpawnfestClock.Scene.Home do
 
         {_, :lt} ->
           diff_str =
-            DateTime.diff(now, @start_dt)
+            DateTime.diff(now, @end_dt)
             |> Timex.Duration.from_seconds()
             |> Timex.Format.Duration.Formatters.Humanized.format()
 
